@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:note_app/src/resources/notes_screen.dart';
 
+import 'package:note_app/src/resources/screens/notes_screen.dart';
 
 void main() async {
   //WidgetsFlutterBinding.ensureInitialized();
