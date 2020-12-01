@@ -1,9 +1,10 @@
 # Notes Management Application
-#All the app about:
+1
+# All the app about:
 
 - Tạo ghi chú
 - Thống kê
-  #How to use
+# How to use
 
 Technology use
 
