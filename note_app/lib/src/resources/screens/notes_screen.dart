@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:note_app/src/model/notes_model.dart';
 import 'package:intl/intl.dart';
+import 'package:note_app/src/resources/login/login.dart';
+import 'package:note_app/src/resources/login/login_screen.dart';
 class NotesScreen extends StatefulWidget {
   @override
   _NotesScreenState createState() => _NotesScreenState();
@@ -91,19 +93,33 @@ class _NotesScreenState extends State<NotesScreen>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Container(
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              Login(),
+        ),
+      );
+                  },
+                  child: Container(
                   height: 50.0,
                   width: 50.0,
+                  
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage('assets/images/male_avatar.png'),
+                    
                     ),
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
+                ),
                 SizedBox(width: 20.0),
                 Text(
-                  'Jenny Breaks',
+                  'Trinh Xuan Dat',
+                  
                   style: TextStyle(
                     fontSize: 28.0,
                     fontWeight: FontWeight.bold,

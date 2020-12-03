@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note_app/src/resources/screens/notes_screen.dart';
 
 class Background extends StatelessWidget {
   final Widget child;
@@ -16,6 +17,7 @@ class Background extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
+         
           Positioned(
             top: 0,
             left: 0,
@@ -31,7 +33,9 @@ class Background extends StatelessWidget {
               width: size.width * 0.4,
             ),
           ),
+          
           child,
+          
         ],
       ),
     );

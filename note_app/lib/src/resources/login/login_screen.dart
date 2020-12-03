@@ -5,6 +5,7 @@ import 'package:note_app/src/components/background_login.dart';
 import 'package:note_app/src/components/rounded_button.dart';
 import 'package:note_app/src/components/rounded_input_field.dart';
 import 'package:note_app/src/components/rounded_password_field.dart';
+import 'package:note_app/src/resources/login/signup.dart';
 import 'package:note_app/src/resources/login/signup_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -16,6 +17,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Background(
+      
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -48,7 +50,7 @@ class LoginScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return SignUpScreen();
+                      return SignUp();
                     },
                   ),
                 );
