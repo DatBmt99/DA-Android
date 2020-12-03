@@ -35,41 +35,41 @@ List<SliderModel> getSlides() {
   SliderModel sliderModel = new SliderModel();
 
   //1
-  sliderModel.setDesc("YOURBUS");
+  sliderModel.setDesc("Notes App");
   sliderModel.setTitle("CHÀO MỪNG BẠN ĐẾN VỚI");
-  sliderModel.setImageAssetPath("assets/images/bus_stop.png");
+  sliderModel.setImageAssetPath("assets/images/notes.png");
   slides.add(sliderModel);
 
   sliderModel = new SliderModel();
 
   //2
-  sliderModel.setDesc("Xem biểu đồ giờ,xác định thời gian thực xe đến trạm. Theo dõi vị trí và luồng di chuyển của phương tiện");
-  sliderModel.setTitle("Dự báo thời gian");
-  sliderModel.setImageAssetPath("assets/images/travel_plans.png");
+  sliderModel.setDesc("Quản lý ghi chú cá nhân");
+  sliderModel.setTitle("Ứng dụng");
+  sliderModel.setImageAssetPath("assets/images/design_notes.png");
   slides.add(sliderModel);
 
   sliderModel = new SliderModel();
 
   //3
-  sliderModel.setDesc("Tra cứu tìm kiếm địa điểm mong muốn phù hợp mục đích đi lại");
-  sliderModel.setTitle("Tìm kiếm địa điểm dễ dàng");
-  sliderModel.setImageAssetPath("assets/images/search.png");
+  sliderModel.setDesc("Đơn giản dễ sử dụng, giao diện hiện đại");
+  sliderModel.setTitle("Tiện lợi");
+  sliderModel.setImageAssetPath("assets/images/calendar.png");
   slides.add(sliderModel);
 
   sliderModel = new SliderModel();
 
   //4
-  sliderModel.setDesc("Dễ dàng thanh toán trực tiếp nhanh chóng sử dụng QR Code hoặc Thẻ");
-  sliderModel.setTitle("Thanh toán online");
-  sliderModel.setImageAssetPath("assets/images/online_payment.png");
+  sliderModel.setDesc("Dễ dàng làm việc, lên kế hoạch, ghi chú nhanh chóng, ");
+  sliderModel.setTitle("Linh hoạt");
+  sliderModel.setImageAssetPath("assets/images/plans.png");
   slides.add(sliderModel);
 
   sliderModel = new SliderModel();
 
   //5
-  sliderModel.setDesc("Tìm lộ trình gợi ý tối, tra cứu đầy đủ thông tin các tuyến kết hợp di chuyển đa phương tiện");
-  sliderModel.setTitle("Chỉ đường");
-  sliderModel.setImageAssetPath("assets/images/destinations.png");
+  sliderModel.setDesc("Lưu trữ sao lưu dữ liệu, thông báo người dùng ");
+  sliderModel.setTitle("Đồng bộ");
+  sliderModel.setImageAssetPath("assets/images/save.png");
   slides.add(sliderModel);
 
   sliderModel = new SliderModel();

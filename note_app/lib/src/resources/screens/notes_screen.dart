@@ -96,7 +96,7 @@ class _NotesScreenState extends State<NotesScreen>
                   width: 50.0,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/images/user.png'),
+                      image: AssetImage('assets/images/male_avatar.png'),
                     ),
                     borderRadius: BorderRadius.circular(10.0),
                   ),
