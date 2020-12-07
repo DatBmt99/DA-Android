@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:note_app/src/model/notes_model.dart';
 import 'package:intl/intl.dart';
 import 'package:note_app/src/resources/login/login.dart';
-import 'package:note_app/src/resources/login/login_screen.dart';
 class NotesScreen extends StatefulWidget {
   @override
   _NotesScreenState createState() => _NotesScreenState();

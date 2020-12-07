@@ -6,18 +6,30 @@ import 'package:note_app/src/components/rounded_button.dart';
 import 'package:note_app/src/components/rounded_input_field.dart';
 import 'package:note_app/src/components/rounded_password_field.dart';
 import 'package:note_app/src/resources/login/signup.dart';
-import 'package:note_app/src/resources/login/signup_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({
     Key key,
   }) : super(key: key);
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+   TextEditingController _emailController = TextEditingController();
+   TextEditingController _passController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Background(
-      
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -34,7 +46,9 @@ class LoginScreen extends StatelessWidget {
             SizedBox(height: size.height * 0.03),
             RoundedInputField(
               hintText: "Your Email",
-              onChanged: (value) {},
+              onChanged: (value) {
+               // _emailController = value;
+              },
             ),
             RoundedPasswordField(
               onChanged: (value) {},

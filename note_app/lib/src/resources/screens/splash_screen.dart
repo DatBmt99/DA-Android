@@ -12,13 +12,17 @@ class LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Clean Code',
-        home: AnimatedSplashScreen(
-            duration: 3000,
-            splash: Image.asset("assets/images/add_notes.png"),
-            nextScreen: NotesScreen(),
+        //title: 'Loading',
+        home: AnimatedSplashScreen.withScreenFunction(
+            duration: 5000,
+            splash: Image.asset(
+              "assets/images/loading.gif",
+            ),
+            screenFunction: () async {
+              return NotesScreen();
+            },
             splashTransition: SplashTransition.fadeTransition,
             pageTransitionType: PageTransitionType.scale,
-            backgroundColor: Colors.blue[50]));
+            backgroundColor: Colors.white));
   }
 }

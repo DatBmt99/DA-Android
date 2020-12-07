@@ -8,7 +8,6 @@ import 'package:note_app/src/components/rounded_input_field.dart';
 import 'package:note_app/src/components/rounded_password_field.dart';
 import 'package:note_app/src/components/social_icon.dart';
 import 'package:note_app/src/resources/login/login.dart';
-import 'package:note_app/src/resources/login/login_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
   @override

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:note_app/src/resources/screens/notes_screen.dart';
 
 class Background extends StatelessWidget {
   final Widget child;
