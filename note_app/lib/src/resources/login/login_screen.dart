@@ -1,12 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:note_app/src/components/already_have_an_account_acheck.dart';
 import 'package:note_app/src/components/background_login.dart';
 import 'package:note_app/src/components/rounded_button.dart';
 import 'package:note_app/src/components/rounded_input_field.dart';
 import 'package:note_app/src/components/rounded_password_field.dart';
+import 'package:note_app/src/model/user_model.dart';
 import 'package:note_app/src/resources/login/signup.dart';
 import 'package:note_app/src/resources/screens/notes_screen.dart';
+import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
@@ -17,14 +22,50 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passController = TextEditingController();
+  bool login = false;
+  String _email;
+  String _password;
+  Future<UserModel> loginUser() async {
+    var response = await http
+        .post(
+      'https://api-mobile-app.herokuapp.com/api/signin',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'email': _email,
+        'password': _password,
+      }),
+    )
+        .catchError((e) {
+      throw (e);
+    });
+    print(response.body);
 
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passController.dispose();
-    super.dispose();
+    if (response.statusCode == 200) {
+      showToast("Login succesful");
+      setState(() {
+        login = true;
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => NotesScreen()));
+      });
+      return userModelFromJson(response.body);
+    } else {
+      setState(() {
+        login = false;
+      });
+      showToast(jsonDecode(response.body)['error'] ?? "Something went wrong");
+      return null;
+    }
+  }
+
+  showToast(String msg) {
+    Fluttertoast.showToast(
+      msg: "$msg",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+    );
   }
 
   @override
@@ -56,10 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             RoundedButton(
               text: "LOGIN",
-              press: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => NotesScreen()));
-              },
+              press: loginUser,
             ),
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(

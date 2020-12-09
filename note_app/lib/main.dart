@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:note_app/src/resources/screens/notes_screen.dart';
 
 import 'package:note_app/src/resources/screens/onboarding_screen.dart';
-import 'package:note_app/src/resources/widgets/floatbutton.dart';
+
 
 void main() => runApp((MyApp()));
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-daimport 'package:note_app/src/components/rounded_input_field.dart';
+import 'package:note_app/src/components/rounded_input_field.dart';
 import 'package:note_app/src/components/search_input.dart';
 import 'package:note_app/src/model/notes.dart';
 
@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:note_app/src/resources/login/login.dart';
 import 'package:note_app/src/resources/screens/new_category.dart';
 import 'package:note_app/src/resources/widgets/floatbutton.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class NotesScreen extends StatefulWidget {
   @override

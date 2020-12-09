@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:note_app/src/components/already_have_an_account_acheck.dart';
 import 'package:note_app/src/components/background_login.dart';
 import 'package:note_app/src/components/or_divider.dart';
@@ -8,10 +9,9 @@ import 'package:note_app/src/components/rounded_input_field.dart';
 import 'package:note_app/src/components/rounded_password_field.dart';
 import 'package:note_app/src/components/social_icon.dart';
 import 'package:note_app/src/resources/login/login.dart';
-
 import 'package:note_app/src/model/user_model.dart';
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 
 class SignUpScreen extends StatelessWidget {
   String _email;
