@@ -25,6 +25,7 @@ class ForgotPassInput extends StatefulWidget {
 
 class _ForgotPassInputState extends State<ForgotPassInput> {
   String _email;
+
   Future<UserModel> forgotPassWord() async {
     var response = await http
         .post(
@@ -41,15 +42,16 @@ class _ForgotPassInputState extends State<ForgotPassInput> {
     });
 
     print(response.body);
-
     if (response.statusCode == 200) {
       showToast("Send succesfully");
       // setState(() {
       //   loading = false;
       // });
-      showToast(jsonDecode(response.body)['error'] ?? "Something went wrong");
+
       return userModelFromJson(response.body);
-    }
+    } else
+      return showToast(
+          jsonDecode(response.body)['error'] ?? "Something went wrong");
   }
 
   showToast(String msg) {

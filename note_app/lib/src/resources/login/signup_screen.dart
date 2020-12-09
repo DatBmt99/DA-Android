@@ -13,7 +13,15 @@ import 'package:note_app/src/model/user_model.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({
+    Key key,
+  }) : super(key: key);
+  @override
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
   String _email;
   String _password;
 
@@ -42,7 +50,7 @@ class SignUpScreen extends StatelessWidget {
       // setState(() {
       //   loading = false;
       // });
-       return userModelFromJson(response.body);
+      return userModelFromJson(response.body);
     } else {
       showToast(jsonDecode(response.body)['error'] ?? "Something went wrong");
       return null;
