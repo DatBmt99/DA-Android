@@ -6,6 +6,11 @@ import 'package:note_app/src/components/rounded_button.dart';
 import 'package:note_app/src/components/rounded_input_field.dart';
 import 'package:note_app/src/components/rounded_password_field.dart';
 import 'package:note_app/src/resources/login/signup.dart';
+import 'package:http/http.dart' as http;
+import 'package:note_app/src/model/user_model.dart';
+import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:note_app/src/resources/screens/notes_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
@@ -16,15 +21,59 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-   TextEditingController _emailController = TextEditingController();
-   TextEditingController _passController = TextEditingController();
+  // TextEditingController _emailController = TextEditingController();
+  // TextEditingController _passController = TextEditingController();
+  bool login = false;
+  String _email;
+  String _password;
 
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passController.dispose();
-    super.dispose();
+  Future<UserModel> loginUser() async {
+    var response = await http
+        .post(
+      'https://api-mobile-app.herokuapp.com/api/signin',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'email': _email,
+        'password': _password,
+      }),
+    )
+        .catchError((e) {
+      throw (e);
+    });
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      showToast("Login succesful");
+      setState(() {
+        login = true;
+      });
+      return userModelFromJson(response.body);
+    } else {
+      setState(() {
+        login = false;
+      });
+      showToast(jsonDecode(response.body)['error'] ?? "Something went wrong");
+      return null;
+    }
   }
+
+  showToast(String msg) {
+    Fluttertoast.showToast(
+      msg: "$msg",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+    );
+  }
+
+  // @override
+  // void dispose() {
+  //   _emailController.dispose();
+  //   _passController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -47,24 +96,27 @@ class _LoginScreenState extends State<LoginScreen> {
             RoundedInputField(
               hintText: "Your Email",
               onChanged: (value) {
-               // _emailController = value;
+                _email = value;
               },
             ),
             RoundedPasswordField(
-              onChanged: (value) {},
+              onChanged: (value) {
+                _password = value;
+              },
             ),
             RoundedButton(
               text: "LOGIN",
-              press: () {},
+              press: loginUser,
             ),
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(
+              login: false,
               press: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return SignUp();
+                      return NotesScreen();
                     },
                   ),
                 );
