@@ -42,8 +42,10 @@ class SignUpScreen extends StatelessWidget {
       // setState(() {
       //   loading = false;
       // });
+       return userModelFromJson(response.body);
+    } else {
       showToast(jsonDecode(response.body)['error'] ?? "Something went wrong");
-      return userModelFromJson(response.body);
+      return null;
     }
   }
 
