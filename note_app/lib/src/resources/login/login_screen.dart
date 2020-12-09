@@ -5,11 +5,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:note_app/src/components/already_have_an_account_acheck.dart';
 import 'package:note_app/src/components/background_login.dart';
+
 import 'package:note_app/src/components/rounded_button.dart';
 import 'package:note_app/src/components/rounded_input_field.dart';
 import 'package:note_app/src/components/rounded_password_field.dart';
+import 'package:note_app/src/components/text_forgot_pass.dart';
 import 'package:note_app/src/model/user_model.dart';
 import 'package:note_app/src/resources/login/signup.dart';
+import 'package:note_app/src/resources/screens/forgot_screen.dart';
 import 'package:note_app/src/resources/screens/notes_screen.dart';
 import 'package:http/http.dart' as http;
 
@@ -44,10 +47,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (response.statusCode == 200) {
       showToast("Login succesful");
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => NotesScreen()));
       setState(() {
         login = true;
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => NotesScreen()));
       });
       return userModelFromJson(response.body);
     } else {
@@ -71,6 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    
     return Background(
       child: SingleChildScrollView(
         child: Column(
@@ -114,6 +118,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 );
               },
             ),
+            SizedBox(height: size.height * 0.03),
+            ForgotPass(
+              
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return ForgotPassword();
+                    },
+                  ),
+                );
+              },
+            )
           ],
         ),
       ),
