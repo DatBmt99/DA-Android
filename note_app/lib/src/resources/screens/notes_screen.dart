@@ -1,12 +1,31 @@
 import 'package:flutter/material.dart';
+daimport 'package:note_app/src/components/rounded_input_field.dart';
+import 'package:note_app/src/components/search_input.dart';
+import 'package:note_app/src/model/notes.dart';
+
 import 'package:note_app/src/model/notes_model.dart';
 import 'package:intl/intl.dart';
 import 'package:note_app/src/resources/login/login.dart';
+import 'package:note_app/src/resources/screens/new_category.dart';
+import 'package:note_app/src/resources/widgets/floatbutton.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 class NotesScreen extends StatefulWidget {
   @override
   _NotesScreenState createState() => _NotesScreenState();
 }
-
+class MyTheme {
+  Color mainAccentColor = Color(0xff3f79fe);
+  Color secondaryColor = Color(0xffeff3f8);
+}
+// List<Note> notes = [];
+// List<Category> categoryList = [Category('Not Specified')];
+// List<String> categoryNameList = [];
+// List<Note> starredNotes = [];
+// Note note = Note('', '', Category('Not Specified'));
+// Category newCategory = Category('Not Specified');
+String userName = '';
+MyTheme myTheme = MyTheme();
 class _NotesScreenState extends State<NotesScreen>
     with SingleTickerProviderStateMixin {
   int _selectedCategoryIndex = 0;
@@ -93,32 +112,28 @@ class _NotesScreenState extends State<NotesScreen>
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>
-              Login(),
-        ),
-      );
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Login(),
+                      ),
+                    );
                   },
                   child: Container(
-                  height: 50.0,
-                  width: 50.0,
-                  
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/male_avatar.png'),
-                    
+                    height: 50.0,
+                    width: 50.0,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/male_avatar.png'),
+                      ),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                    borderRadius: BorderRadius.circular(10.0),
                   ),
-                ),
                 ),
                 SizedBox(width: 20.0),
                 Text(
                   'Trinh Xuan Dat',
-                  
                   style: TextStyle(
                     fontSize: 28.0,
                     fontWeight: FontWeight.bold,
@@ -127,6 +142,7 @@ class _NotesScreenState extends State<NotesScreen>
               ],
             ),
           ),
+          SearchInputField(),
           SizedBox(height: 40.0),
           Container(
             height: 280.0,
@@ -250,6 +266,7 @@ class _NotesScreenState extends State<NotesScreen>
                         color: Colors.white,
                       ),
                     ),
+                    
                   ],
                 ),
               ],
@@ -299,7 +316,59 @@ class _NotesScreenState extends State<NotesScreen>
             ),
           ),
         ],
+        
       ),
+      // floatingActionButton: Padding(
+      //   padding: const EdgeInsets.fromLTRB(15, 8.0, 15, 8.0),
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //     children: <Widget>[
+      //       FloatingActionButton.extended(
+      //         backgroundColor: myTheme.mainAccentColor,
+      //         heroTag: 'AddEditCategory',
+      //         label: Text('Category'),
+      //         icon: Icon(Icons.add),
+      //         onPressed: () {
+      //           newCategory = Category('Not Specified');
+      //           Navigator.push(
+      //             context,
+      //             MaterialPageRoute(builder: (context) => AddEditCategory()),
+      //           ).then((onValue) {
+      //             if (newCategory.name != 'Not Specified') {
+      //               categoryList.add(newCategory);
+      //               categoryNameList.add(newCategory.name);
+      //               SharedPreferences.getInstance().then((prefs) {
+      //                 prefs.setStringList('categoryNameList', categoryNameList);
+      //                 addCategoryNameColor(newCategory.name, newCategory.color);
+      //               });
+
+      //               updateList();
+      //               updateCategoryList();
+      //             }
+      //           });
+      //         },
+      //       ),
+      //       FloatingActionButton.extended(
+      //         heroTag: 'AddEditNote',
+      //         backgroundColor: myTheme.mainAccentColor,
+      //         label: Text('Note'),
+      //         icon: Icon(Icons.add),
+      //         onPressed: () {
+      //           note = Note('', '', Category('Not Specified'));
+      //           Navigator.push(
+      //             context,
+      //             MaterialPageRoute(builder: (context) => AddEditNote()),
+      //           ).then((onValue) {
+      //             if (note.title != '' && note.text != '') {
+      //               databaseHelper.insertNote(note);
+      //             }
+      //             updateList();
+      //           });
+      //         },
+      //       )
+      //     ],
+      //   ),
+      // ),
     );
   }
 }

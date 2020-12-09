@@ -6,6 +6,7 @@ import 'package:note_app/src/components/rounded_button.dart';
 import 'package:note_app/src/components/rounded_input_field.dart';
 import 'package:note_app/src/components/rounded_password_field.dart';
 import 'package:note_app/src/resources/login/signup.dart';
+import 'package:note_app/src/resources/screens/notes_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
@@ -16,8 +17,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-   TextEditingController _emailController = TextEditingController();
-   TextEditingController _passController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passController = TextEditingController();
 
   @override
   void dispose() {
@@ -47,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
             RoundedInputField(
               hintText: "Your Email",
               onChanged: (value) {
-               // _emailController = value;
+                // _emailController = value;
               },
             ),
             RoundedPasswordField(
@@ -55,7 +56,10 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             RoundedButton(
               text: "LOGIN",
-              press: () {},
+              press: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => NotesScreen()));
+              },
             ),
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(
