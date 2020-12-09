@@ -89,11 +89,13 @@ class _LoginScreenState extends State<LoginScreen> {
             RoundedInputField(
               hintText: "Your Email",
               onChanged: (value) {
-                // _emailController = value;
+                _email = value;
               },
             ),
             RoundedPasswordField(
-              onChanged: (value) {},
+              onChanged: (value) {
+                _password = value;
+              },
             ),
             RoundedButton(
               text: "LOGIN",
