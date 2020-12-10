@@ -131,7 +131,7 @@ class _NotesScreenState extends State<NotesScreen>
                 child: Icon(Icons.menu)
                 ),
               ),     
-            SizedBox(height: 40.0),
+            SizedBox(height: 10.0),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 30.0),
               child: Row(
@@ -168,8 +168,10 @@ class _NotesScreenState extends State<NotesScreen>
                 ],
               ),
             ),
-            //  SearchInputField(),
-            SizedBox(height: 40.0),
+            SearchInputField(
+              
+            ),
+            SizedBox(height: 5.0),
             Container(
               height: 280.0,
               child: ListView.builder(

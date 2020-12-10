@@ -10,9 +10,29 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfilePage extends State<UserProfile> {
-  // Widget textField(@required String hintText){
-  //   return
-  // }
+  Widget textField({@required String hintText}) {
+    return Material(
+      elevation: 4,
+      shadowColor: Colors.grey,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: TextField(
+        decoration: InputDecoration(
+          hintText: hintText,
+          hintStyle: TextStyle(
+            letterSpacing: 2,
+            color: Colors.black54,
+            fontWeight: FontWeight.bold,
+          ),
+          fillColor: Colors.white30,
+          filled: true,
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide.none),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -25,7 +45,9 @@ class _UserProfilePage extends State<UserProfile> {
         backgroundColor: Colors.blue[200],
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         //  actions: <Widget>[
         //               child:Text("Dang xuat"),
@@ -43,7 +65,26 @@ class _UserProfilePage extends State<UserProfile> {
                 margin: EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [],
+                  children: [
+                    textField(hintText: 'Your Name'),
+                    textField(hintText: 'Email'),
+                    Container(
+                      height: 55,
+                      width: double.infinity,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(29),
+                        child: FlatButton(
+                          // padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+                          color: Colors.blue,
+                          onPressed: () {},
+                          child: Text(
+                            "CẬP NHẬT",
+                            style: TextStyle(fontSize: 20, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               )
             ],
