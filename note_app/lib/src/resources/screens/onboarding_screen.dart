@@ -5,7 +5,6 @@ import 'package:note_app/src/model/slides_model.dart';
 import 'package:note_app/src/resources/screens/splash_screen.dart';
 import 'package:note_app/src/resources/widgets/slider_mode.dart';
 
-
 class OnBoarding extends StatefulWidget {
   @override
   _OnBoardingState createState() => _OnBoardingState();
@@ -134,16 +133,15 @@ class _OnBoardingState extends State<OnBoarding> {
                   print("Bắt đầu");
                 },
                 child: Container(
-                  height: Platform.isAndroid ? 70 : 60,
-
-                  color: Colors.blue,
+                  height: 70,
+                  color: Colors.deepPurple,
                   alignment: Alignment.bottomCenter,
                   child: FlatButton(
                     child: Align(
                         child: Text(
                       "BẮT ĐẦU NGAY",
                       style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w600),
+                          color: Colors.white, fontWeight: FontWeight.w700),
                     )),
                     onPressed: () {
                       Navigator.push(
@@ -167,4 +165,3 @@ class _OnBoardingState extends State<OnBoarding> {
     );
   }
 }
-
