@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:note_app/src/config/constants.dart';
 
 class ForgotPass extends StatelessWidget {
- // final bool login;
+  final bool formlogin;
   final Function press;
   const ForgotPass({
     Key key,
-   // this.login = true,
+    this.formlogin = true,
     this.press,
   }) : super(key: key);
 
@@ -22,7 +22,7 @@ class ForgotPass extends StatelessWidget {
         GestureDetector(
           onTap: press,
           child: Text(
-            "Forgot Password ?",
+            formlogin ? "Forgot Password ? " : "Back",
             style: TextStyle(
               color: kPrimaryColor,
               fontWeight: FontWeight.bold,

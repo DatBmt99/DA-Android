@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:note_app/src/components/background_login.dart';
 import 'package:note_app/src/components/rounded_button.dart';
 import 'package:note_app/src/components/rounded_input_field.dart';
+import 'package:note_app/src/components/text_forgot_pass.dart';
 
 import 'package:note_app/src/model/user_model.dart';
 import 'package:http/http.dart' as http;
@@ -92,6 +93,13 @@ class _ForgotPassInputState extends State<ForgotPassInput> {
               text: "XÁC NHẬN",
               press: forgotPassWord,
             ),
+            SizedBox(height: size.height * 0.03),
+            ForgotPass(
+              formlogin: false,
+              press: () {
+                Navigator.pop(context);
+              },
+            )
           ],
         ),
       ),

@@ -12,20 +12,20 @@ class _HomeMenuState extends State<HomeMenu> {
       child: Column(
         children: [
           Container(
-            width: double.infinity,
+            //width: double.infinity,
             padding: EdgeInsets.all(20),
             color: Colors.blue[500],
             child: Center(
               child: Column(
                 children: [
                   Container(
-                    width: 100,
-                    height: 100,
-                    margin: EdgeInsets.only(top: 30, bottom: 10),
+                    width: 50,
+                    height: 50,
+                    margin: EdgeInsets.only(top: 15, bottom: 5),
                     decoration: (BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                          image: AssetImage('assets/icons/user.png'),
+                          image: AssetImage('assets/images/male_avatar.png'),
                           fit: BoxFit.fill),
                     )),
                   ),
@@ -41,6 +41,7 @@ class _HomeMenuState extends State<HomeMenu> {
               ),
             ),
           ),
+      //    new Divider(),
           ListTile(
             leading: Icon(Icons.circle_notifications),
             title: Text(
@@ -48,43 +49,36 @@ class _HomeMenuState extends State<HomeMenu> {
               style: TextStyle(fontSize: 18),
             ),
             onTap: () {
-               Navigator.pushNamed(context, '/settings');
+            //  Navigator.pushNamed(context, '/settings');
             },
           ),
-          ListTile(
-            leading: Icon(Icons.add_location_alt),
-            title: Text(
-              'Đổi khu vực',
-              style: TextStyle(fontSize: 18),
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, '/settings');
-            },
-          ),
+      
+          new Divider(),
           ListTile(
             leading: Icon(Icons.settings),
             title: Text(
-              'Cài đặt',
+              'Setting',
               style: TextStyle(fontSize: 18),
             ),
             onTap: () {
-               Navigator.pushNamed(context, '/settings');
+          //    Navigator.pushNamed(context, '/settings');
             },
           ),
           ListTile(
-            leading: Icon(Icons.download_sharp),
+            leading: Icon(Icons.cloud),
             title: Text(
-              'Cập nhật dữ liệu',
+              'Cloud',
               style: TextStyle(fontSize: 18),
             ),
             onTap: () {
-               Navigator.pushNamed(context, '/settings');
+            //  Navigator.pushNamed(context, '/settings');
             },
           ),
+          new Divider(),
           ListTile(
             leading: Icon(Icons.mail),
             title: Text(
-              'Góp ý và Phản ánh',
+              'Support Us',
               style: TextStyle(fontSize: 18),
             ),
             onTap: () {},
@@ -92,33 +86,34 @@ class _HomeMenuState extends State<HomeMenu> {
           ListTile(
             leading: Icon(Icons.star),
             title: Text(
-              'Đánh giá ứng dụng',
+              'Rate and Review',
               style: TextStyle(fontSize: 18),
             ),
             onTap: () {
-               Navigator.pushNamed(context, '/settings');
+            //  Navigator.pushNamed(context, '/settings');
             },
           ),
+          new Divider(),
           ListTile(
             leading: Icon(Icons.info),
             title: Text(
-              'Liên hệ',
+              'About',
               style: TextStyle(fontSize: 18),
             ),
             onTap: () {
-               Navigator.pushNamed(context, '/settings');
+         //     Navigator.pushNamed(context, '/settings');
             },
           ),
-           ListTile(
-            leading: Icon(Icons.app_registration),
-            title: Text(
-              'Đăng kí',
-              style: TextStyle(fontSize: 18),
-            ),
-            onTap: () {
-               Navigator.pushNamed(context, '/settings');
-            },
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.app_registration),
+          //   title: Text(
+          //     'Đăng kí',
+          //     style: TextStyle(fontSize: 18),
+          //   ),
+          //   onTap: () {
+          //     Navigator.pushNamed(context, '/settings');
+          //   },
+          // ),
         ],
       ),
     );

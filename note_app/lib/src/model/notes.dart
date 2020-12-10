@@ -24,10 +24,18 @@ class Note {
     map['title'] = title;
     map['text'] = text;
     map['category'] = category.name;
+    map['priority'] = priority.name;
     map['date'] = dateTime.toIso8601String();
     return map;
   }
+
 }
+  final Map<String, int> categories = {
+  'Notes': 112,
+  'Work': 58,
+  'Home': 23,
+  'Complete': 31,
+  };
 
 class Category {
   String name;
