@@ -43,11 +43,10 @@ class _ForgotPassInputState extends State<ForgotPassInput> {
 
     print(response.body);
     if (response.statusCode == 200) {
-      showToast("Send succesfully");
+      showToast(jsonDecode(response.body)['message']);
       // setState(() {
       //   loading = false;
       // });
-
       return userModelFromJson(response.body);
     } else
       return showToast(
@@ -84,7 +83,7 @@ class _ForgotPassInputState extends State<ForgotPassInput> {
             RoundedInputField(
               hintText: "Your Email",
               onChanged: (value) {
-                // _email = value;
+                _email = value;
               },
             ),
             // SizedBox(height: size.height * 0.03),
