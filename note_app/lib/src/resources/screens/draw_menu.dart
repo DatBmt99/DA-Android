@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:note_app/src/resources/screens/about.dart';
 import 'package:note_app/src/resources/screens/notify.dart';
+import 'package:note_app/src/resources/screens/rate_and_review.dart';
 import 'package:note_app/src/resources/screens/setting.dart';
 import 'package:note_app/src/resources/screens/user_info.dart';
 
@@ -125,7 +126,12 @@ class _HomeMenuState extends State<HomeMenu> {
               style: TextStyle(fontSize: 18),
             ),
             onTap: () {
-              //  Navigator.pushNamed(context, '/settings');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => RateandReview(),
+                ),
+              );
             },
           ),
           new Divider(),

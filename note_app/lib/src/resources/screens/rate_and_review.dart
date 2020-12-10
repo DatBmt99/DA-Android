@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -18,13 +19,15 @@ class _RateandReviewPage extends State<RateandReview> {
     // Enable hybrid composition.
     if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }
+
+  //Completer<WebViewController> _controller = Completer<WebViewController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Đánh giá'),
         elevation: 0.0,
-        backgroundColor: Colors.blue[200],
+        backgroundColor: Colors.blue[500],
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -32,8 +35,9 @@ class _RateandReviewPage extends State<RateandReview> {
           },
         ),
       ),
-      body: Container(
-        child: WebView(initialUrl: 'https://play.google.com/store',)
+      body: WebView(
+        initialUrl: 'https://play.google.com/store',
+        // javascriptMode: Java,
       ),
     );
   }

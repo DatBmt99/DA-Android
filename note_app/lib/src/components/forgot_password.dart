@@ -93,12 +93,7 @@ class _ForgotPassInputState extends State<ForgotPassInput> {
               press: forgotPassWord,
             ),
             SizedBox(height: size.height * 0.03),
-            ForgotPass(
-              formlogin: false,
-              press: () {
-                Navigator.pop(context);
-              },
-            )
+            
           ],
         ),
       ),
