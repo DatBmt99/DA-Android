@@ -1,18 +1,16 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:note_app/src/components/search_input.dart';
+// import 'package:note_app/src/components/search_input.dart';
 import 'package:note_app/src/model/notes.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:note_app/src/model/notes_model.dart';
+// import 'package:note_app/src/model/notes_model.dart';
 import 'package:intl/intl.dart';
-import 'package:note_app/src/model/user_info_model.dart';
 import 'package:note_app/src/resources/login/login.dart';
 import 'package:note_app/src/resources/screens/add_notes.dart';
 import 'package:note_app/src/resources/screens/draw_menu.dart';
 import 'package:note_app/src/resources/screens/new_category.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
-import 'package:note_app/jwt_decoder.dart';
+import 'package:note_app/helper/jwt_decoder.dart';
 
 class NotesScreen extends StatefulWidget {
   @override
@@ -63,17 +61,12 @@ class _NotesScreenState extends State<NotesScreen>
 
   checkLoginStatus() async {
     sharedPreferences = await SharedPreferences.getInstance();
+    var token = sharedPreferences.getString("token");
     if (sharedPreferences.getString("token") == null) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (BuildContext context) => Login()),
           (Route<dynamic> route) => false);
     }
-  }
-
-  // ignore: missing_return
-  Future<UserInfo> userInfo() async {
-    sharedPreferences = await SharedPreferences.getInstance();
-    var token = sharedPreferences.getString("token");
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
     setState(() {
       userName = decodedToken['name'];
@@ -84,7 +77,6 @@ class _NotesScreenState extends State<NotesScreen>
   void initState() {
     super.initState();
     checkLoginStatus();
-    userInfo();
     _tabController = TabController(initialIndex: 0, length: 3, vsync: this);
   }
 
