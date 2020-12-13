@@ -12,6 +12,7 @@ import 'package:note_app/src/resources/screens/draw_menu.dart';
 import 'package:note_app/src/resources/screens/new_category.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:note_app/jwt_decoder.dart';
 
 class NotesScreen extends StatefulWidget {
   @override
@@ -49,7 +50,7 @@ List<Note> starredNotes = [];
 Note note = Note('', '', Category('Not Specified'), Priority('Not Specified'));
 Category newCategory = Category('Not Specified');
 Priority newPriority = Priority('Not Specified');
-String userName = '';
+String userName;
 MyTheme myTheme = MyTheme();
 
 class _NotesScreenState extends State<NotesScreen>
@@ -69,21 +70,13 @@ class _NotesScreenState extends State<NotesScreen>
     }
   }
 
-  String name;
-  String email;
-
+  // ignore: missing_return
   Future<UserInfo> userInfo() async {
-    // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    var response = await http.get(
-      'https://api-mobile-app.herokuapp.com/api/getuserinfo',
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-    );
-    var data = json.decode(response.body);
+    sharedPreferences = await SharedPreferences.getInstance();
+    var token = sharedPreferences.getString("token");
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
     setState(() {
-      name = data['displayName'];
-      email = data['email'];
+      userName = decodedToken['name'];
     });
   }
 
@@ -209,7 +202,7 @@ class _NotesScreenState extends State<NotesScreen>
                   ),
                   SizedBox(width: 20.0),
                   Text(
-                    name,
+                    userName,
                     style: TextStyle(
                       fontSize: 28.0,
                       fontWeight: FontWeight.bold,
