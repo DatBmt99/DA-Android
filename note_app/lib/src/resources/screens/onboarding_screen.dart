@@ -2,8 +2,12 @@ import 'dart:io';
 
 import "package:flutter/material.dart";
 import 'package:note_app/src/model/slides_model.dart';
+import 'package:note_app/src/resources/login/login.dart';
+import 'package:note_app/src/resources/login/login_screen.dart';
+import 'package:note_app/src/resources/screens/notes_screen.dart';
 import 'package:note_app/src/resources/screens/splash_screen.dart';
 import 'package:note_app/src/resources/widgets/slider_mode.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnBoarding extends StatefulWidget {
   @override
@@ -146,8 +150,7 @@ class _OnBoardingState extends State<OnBoarding> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => LoadingScreen()),
+                        MaterialPageRoute(builder: (context) => Login()),
                       );
                     },
                     // child: Text(

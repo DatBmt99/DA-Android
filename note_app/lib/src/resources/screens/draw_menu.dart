@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:note_app/src/resources/login/login.dart';
 import 'package:note_app/src/resources/screens/about.dart';
 import 'package:note_app/src/resources/screens/notify.dart';
 import 'package:note_app/src/resources/screens/rate_and_review.dart';
@@ -12,6 +13,7 @@ class HomeMenu extends StatefulWidget {
 }
 
 class _HomeMenuState extends State<HomeMenu> {
+  
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -55,7 +57,9 @@ class _HomeMenuState extends State<HomeMenu> {
                       child: FlatButton(
                         // padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                         color: Colors.white,
-                        onPressed: () {},
+                        onPressed: () {
+                          
+                        },
                         child: Text(
                           "Đăng xuất",
                           style: TextStyle(fontSize: 20, color: Colors.black),

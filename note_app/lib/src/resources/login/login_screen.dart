@@ -15,6 +15,7 @@ import 'package:note_app/src/resources/login/signup.dart';
 import 'package:note_app/src/resources/screens/forgot_screen.dart';
 import 'package:note_app/src/resources/screens/notes_screen.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
@@ -28,7 +29,11 @@ class _LoginScreenState extends State<LoginScreen> {
   bool login = false;
   String _email;
   String _password;
+
+  String token;
+  bool _isLoading = false;
   Future<UserModel> loginUser() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var response = await http
         .post(
       'https://api-mobile-app.herokuapp.com/api/signin',
@@ -47,10 +52,24 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (response.statusCode == 200) {
       showToast("Login succesful");
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => NotesScreen()));
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => NotesScreen()));
+      if (UserModel().accessToken != null) {
+        setState(() {
+          _isLoading = false;
+        });
+        token = await sharedPreferences.getString("token");
+        await sharedPreferences.setString("token", UserModel().accessToken);
+        // sharedPreferences.setString(
+        //     "token", jsonDecode(response.body)['accessToken']);
+        print('token ${token}');
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (BuildContext context) => NotesScreen()),
+            (Route<dynamic> route) => false);
+      }
       setState(() {
         login = true;
+        _isLoading = false;
       });
       return userModelFromJson(response.body);
     } else {
@@ -74,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    
+
     return Background(
       child: SingleChildScrollView(
         child: Column(
@@ -120,7 +139,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             SizedBox(height: size.height * 0.03),
             ForgotPass(
-              
               press: () {
                 Navigator.push(
                   context,

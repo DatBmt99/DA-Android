@@ -13,7 +13,7 @@ class MyTheme {
   Color secondaryColor = Color(0xffeff3f8);
 }
 
-MyTheme myTheme = MyTheme();
+
 
 class _AddEditNoteState extends State<AddEditNote> {
   TextEditingController titleEditingController = TextEditingController();
@@ -80,22 +80,33 @@ class _AddEditNoteState extends State<AddEditNote> {
     textEditingController.text = note.text;
     return SafeArea(
       child: Scaffold(
+         appBar: AppBar(
+        title: Text('Add notes'),
+        elevation: 0.0,
+        backgroundColor: Colors.blue[200],
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
         backgroundColor: myTheme.secondaryColor,
         body: Stack(
           children: <Widget>[
             ListView(
               children: <Widget>[
-                ListTile(
-                  leading: IconButton(
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: myTheme.mainAccentColor,
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
+                // ListTile(
+                //   leading: IconButton(
+                //     icon: Icon(
+                //       Icons.arrow_back,
+                //       color: myTheme.mainAccentColor,
+                //     ),
+                //     onPressed: () {
+                //       Navigator.pop(context);
+                //     },
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: TextField(

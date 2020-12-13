@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note_app/src/resources/screens/notes_screen.dart';
 
-
 class AddEditCategory extends StatefulWidget {
   @override
   _AddEditCategoryState createState() => _AddEditCategoryState();
@@ -23,6 +22,17 @@ class _AddEditCategoryState extends State<AddEditCategory> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: Text('Add Category'),
+          elevation: 0.0,
+          backgroundColor: Colors.blue[200],
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
         backgroundColor: myTheme.secondaryColor,
         body: ListView(
           children: <Widget>[
