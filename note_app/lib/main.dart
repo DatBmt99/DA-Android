@@ -7,11 +7,11 @@ import 'package:note_app/src/resources/screens/notes_screen.dart';
 import 'package:note_app/src/resources/screens/onboarding_screen.dart';
 import 'package:note_app/src/resources/screens/user_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 int initScreen;
 
 //void main() => runApp((MyApp()));
 Future<void> main() async {
-  
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   initScreen = await prefs.getInt("initScreen");
@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+     // home: Login(),
       initialRoute: initScreen == 0 || initScreen == null ? "first" : "/",
       routes: {
         '/': (context) => Login(),
@@ -33,4 +34,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

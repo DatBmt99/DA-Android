@@ -168,9 +168,12 @@ class _NotesScreenState extends State<NotesScreen>
                 children: <Widget>[
                   GestureDetector(
                     onTap: () {
-                       sharedPreferences.clear();
-                        //   sharedPreferences.commit();
-              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Login()), (Route<dynamic> route) => false);
+                      sharedPreferences.remove("token");
+                      //   sharedPreferences.commit();
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => Login()),
+                          (Route<dynamic> route) => false);
                     },
                     child: Container(
                       height: 50.0,

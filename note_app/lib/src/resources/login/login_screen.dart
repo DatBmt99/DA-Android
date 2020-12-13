@@ -48,21 +48,25 @@ class _LoginScreenState extends State<LoginScreen> {
         .catchError((e) {
       throw (e);
     });
-    print(response.body);
+    // print(response.body);
 
     if (response.statusCode == 200) {
       showToast("Login succesful");
       // Navigator.push(
+      var data = json.decode(response.body);
       //     context, MaterialPageRoute(builder: (context) => NotesScreen()));
-      if (UserModel().accessToken != null) {
+      if (data['accessToken'] != null) {
         setState(() {
           _isLoading = false;
         });
+
+        //   print();
         token = await sharedPreferences.getString("token");
-        await sharedPreferences.setString("token", UserModel().accessToken);
+        await sharedPreferences.setString("token", data['accessToken']);
         // sharedPreferences.setString(
         //     "token", jsonDecode(response.body)['accessToken']);
-        print('token ${token}');
+        //   print(data['acessToken']);
+        //   print('token ${token}');
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (BuildContext context) => NotesScreen()),
             (Route<dynamic> route) => false);
@@ -81,6 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  SharedPreferences sharedPreferences;
   showToast(String msg) {
     Fluttertoast.showToast(
       msg: "$msg",
@@ -88,6 +93,21 @@ class _LoginScreenState extends State<LoginScreen> {
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 1,
     );
+  }
+
+  checkLoginStatus() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    if (sharedPreferences.getString("token") != null) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (BuildContext context) => NotesScreen()),
+          (Route<dynamic> route) => false);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkLoginStatus();
   }
 
   @override

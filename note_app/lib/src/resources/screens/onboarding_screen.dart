@@ -14,10 +14,14 @@ class OnBoarding extends StatefulWidget {
   _OnBoardingState createState() => _OnBoardingState();
 }
 
+
+
 class _OnBoardingState extends State<OnBoarding> {
   List<SliderModel> mySLides = new List<SliderModel>();
   int slideIndex = 0;
   PageController controller;
+
+ 
 
   Widget _buildPageIndicator(bool isCurrentPage) {
     return Container(
@@ -35,6 +39,7 @@ class _OnBoardingState extends State<OnBoarding> {
   void initState() {
     super.initState();
     mySLides = getSlides();
+   
     controller = new PageController();
   }
 
