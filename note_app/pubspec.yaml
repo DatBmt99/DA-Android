@@ -38,6 +38,7 @@ dependencies:
   animated_splash_screen: ^1.0.1+2
   shared_preferences: ^0.5.12+4
   flutter_launcher_icons: ^0.8.1
+  flutter_speed_dial:
   # image_path: "assets/icon/icon.png"
 
 dev_dependencies:

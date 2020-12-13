@@ -13,7 +13,6 @@ class HomeMenu extends StatefulWidget {
 }
 
 class _HomeMenuState extends State<HomeMenu> {
-  
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -57,9 +56,7 @@ class _HomeMenuState extends State<HomeMenu> {
                       child: FlatButton(
                         // padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                         color: Colors.white,
-                        onPressed: () {
-                          
-                        },
+                        onPressed: () {},
                         child: Text(
                           "Đăng xuất",
                           style: TextStyle(fontSize: 20, color: Colors.black),

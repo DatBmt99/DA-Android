@@ -1,15 +1,17 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-
 import 'package:note_app/src/components/search_input.dart';
 import 'package:note_app/src/model/notes.dart';
-
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:note_app/src/model/notes_model.dart';
 import 'package:intl/intl.dart';
+import 'package:note_app/src/model/user_info_model.dart';
 import 'package:note_app/src/resources/login/login.dart';
 import 'package:note_app/src/resources/screens/add_notes.dart';
 import 'package:note_app/src/resources/screens/draw_menu.dart';
 import 'package:note_app/src/resources/screens/new_category.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class NotesScreen extends StatefulWidget {
   @override
@@ -67,10 +69,29 @@ class _NotesScreenState extends State<NotesScreen>
     }
   }
 
+  String name;
+  String email;
+
+  Future<UserInfo> userInfo() async {
+    // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var response = await http.get(
+      'https://api-mobile-app.herokuapp.com/api/getuserinfo',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+    var data = json.decode(response.body);
+    setState(() {
+      name = data['displayName'];
+      email = data['email'];
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     checkLoginStatus();
+    userInfo();
     _tabController = TabController(initialIndex: 0, length: 3, vsync: this);
   }
 
@@ -146,10 +167,10 @@ class _NotesScreenState extends State<NotesScreen>
         child: ListView(
           children: <Widget>[
             AppBar(
-              backgroundColor: Colors.blue[50],
+              backgroundColor: Colors.white10,
               elevation: 0.0,
               title: Text(
-                "NotesApp",
+                "Notes Manager",
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.black),
               ),
@@ -164,7 +185,7 @@ class _NotesScreenState extends State<NotesScreen>
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 30.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   GestureDetector(
                     onTap: () {
@@ -188,7 +209,7 @@ class _NotesScreenState extends State<NotesScreen>
                   ),
                   SizedBox(width: 20.0),
                   Text(
-                    'Trinh Xuan Dat',
+                    name,
                     style: TextStyle(
                       fontSize: 28.0,
                       fontWeight: FontWeight.bold,
@@ -534,54 +555,97 @@ class _NotesScreenState extends State<NotesScreen>
           ],
         ),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.fromLTRB(15, 8.0, 15, 8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            FloatingActionButton.extended(
-              backgroundColor: myTheme.mainAccentColor,
-              heroTag: 'AddEditCategory',
-              label: Text('Category'),
-              icon: Icon(Icons.add),
-              onPressed: () {
-                newCategory = Category('Not Specified');
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddEditCategory()),
-                ).then((onValue) {
-                  if (newCategory.name != 'Not Specified') {
-                    categoryList.add(newCategory);
-                    categoryNameList.add(newCategory.name);
-
-                    // updateList();
-                    // updateCategoryList();
-                  }
-                });
-              },
-            ),
-            FloatingActionButton.extended(
-              heroTag: 'AddEditNote',
-              backgroundColor: myTheme.mainAccentColor,
-              label: Text('Note'),
-              icon: Icon(Icons.add),
-              onPressed: () {
-                note = Note('', '', Category('Not Specified'),
-                    Priority('Not Specified'));
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddEditNote()),
-                ).then((onValue) {
-                  if (note.title != '' && note.text != '') {
-                    //  databaseHelper.insertNote(note);
-                  }
-                  //   updateList();
-                });
-              },
-            )
-          ],
-        ),
+      floatingActionButton: SpeedDial(
+        animatedIcon: AnimatedIcons.add_event,
+        // backgroundColor: Colors.redAccent,
+        children: [
+          SpeedDialChild(
+            child: Icon(Icons.event),
+            label: "Add Note",
+            backgroundColor: Colors.orange,
+            onTap: () {
+              note = Note(
+                  '', '', Category('Not Specified'), Priority('Not Specified'));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AddEditNote()),
+              ).then((onValue) {
+                if (note.title != '' && note.text != '') {
+                  //  databaseHelper.insertNote(note);
+                }
+                //   updateList();
+              });
+            },
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.create_new_folder),
+            label: "Add Category",
+            backgroundColor: Colors.green,
+            onTap: () {
+              newCategory = Category('Not Specified');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AddEditCategory()),
+              ).then((onValue) {
+                if (newCategory.name != 'Not Specified') {
+                  categoryList.add(newCategory);
+                  categoryNameList.add(newCategory.name);
+                  // updateList();
+                  // updateCategoryList();
+                }
+              });
+            },
+          ),
+        ],
       ),
+      // floatingActionButton: Padding(
+      //   padding: const EdgeInsets.fromLTRB(15, 8.0, 15, 8.0),
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //     children: <Widget>[
+      //       FloatingActionButton.extended(
+      //         backgroundColor: myTheme.mainAccentColor,
+      //         heroTag: 'AddEditCategory',
+      //         label: Text('Category'),
+      //         icon: Icon(Icons.add),
+      //         onPressed: () {
+      //           newCategory = Category('Not Specified');
+      //           Navigator.push(
+      //             context,
+      //             MaterialPageRoute(builder: (context) => AddEditCategory()),
+      //           ).then((onValue) {
+      //             if (newCategory.name != 'Not Specified') {
+      //               categoryList.add(newCategory);
+      //               categoryNameList.add(newCategory.name);
+
+      //               // updateList();
+      //               // updateCategoryList();
+      //             }
+      //           });
+      //         },
+      //       ),
+      //       FloatingActionButton.extended(
+      //         heroTag: 'AddEditNote',
+      //         backgroundColor: myTheme.mainAccentColor,
+      //         label: Text('Note'),
+      //         icon: Icon(Icons.add),
+      //         onPressed: () {
+      //           note = Note('', '', Category('Not Specified'),
+      //               Priority('Not Specified'));
+      //           Navigator.push(
+      //             context,
+      //             MaterialPageRoute(builder: (context) => AddEditNote()),
+      //           ).then((onValue) {
+      //             if (note.title != '' && note.text != '') {
+      //               //  databaseHelper.insertNote(note);
+      //             }
+      //             //   updateList();
+      //           });
+      //         },
+      //       )
+      //     ],
+      //   ),
+      // ),
     );
   }
 }

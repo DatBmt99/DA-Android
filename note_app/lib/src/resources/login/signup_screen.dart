@@ -43,7 +43,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       throw (e);
     });
 
-    print(response.body);
+    // print(response.body);
 
     if (response.statusCode == 200) {
       showToast("User registered succesfully");
