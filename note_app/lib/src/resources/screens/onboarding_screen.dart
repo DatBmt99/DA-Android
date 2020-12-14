@@ -14,14 +14,10 @@ class OnBoarding extends StatefulWidget {
   _OnBoardingState createState() => _OnBoardingState();
 }
 
-
-
 class _OnBoardingState extends State<OnBoarding> {
   List<SliderModel> mySLides = new List<SliderModel>();
   int slideIndex = 0;
   PageController controller;
-
- 
 
   Widget _buildPageIndicator(bool isCurrentPage) {
     return Container(
@@ -39,7 +35,7 @@ class _OnBoardingState extends State<OnBoarding> {
   void initState() {
     super.initState();
     mySLides = getSlides();
-   
+
     controller = new PageController();
   }
 
@@ -142,32 +138,58 @@ class _OnBoardingState extends State<OnBoarding> {
                   print("Bắt đầu");
                 },
                 child: Container(
-                  height: 70,
-                  color: Colors.deepPurple,
-                  alignment: Alignment.bottomCenter,
-                  child: FlatButton(
-                    child: Align(
-                        child: Text(
-                      "BẮT ĐẦU NGAY",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w700),
-                    )),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Login()),
-                      );
-                    },
-                    // child: Text(
-                    //   "BẮT ĐẦU NGAY",
-                    //   style: TextStyle(
-                    //       color: Colors.white, fontWeight: FontWeight.w600),
-                    // ),
+                  //height: MediaQuery.of(context).size.height - 100,
+                  height: 110,
+                  // width: 500,
+                  //      color: Colors.deepPurple,
+                  alignment: Alignment.topCenter,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(25),
+                    child: FlatButton(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 25, horizontal: 100),
+                      color: Colors.deepPurple,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Login()),
+                        );
+                      },
+                      child: Text(
+                        "BẮT ĐẦU NGAY",
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    ),
                   ),
-                  // splashFactory: InkRipple.splashFactory,
-                  //
-                  // ),
                 ),
+                splashFactory: InkRipple.splashFactory,
+                // child: Container(
+                //   height: 70,
+                //   color: Colors.deepPurple,
+                //   alignment: Alignment.bottomCenter,
+
+                //   child: FlatButton(
+                //     child: Align(
+                //         child: Text(
+                //       "BẮT ĐẦU NGAY",
+                //       style: TextStyle(
+                //           color: Colors.white, fontWeight: FontWeight.w700),
+                //     )),
+                //     onPressed: () {
+
+                //     },
+                //     // child: Text(
+                //     //   "BẮT ĐẦU NGAY",
+                //     //   style: TextStyle(
+                //     //       color: Colors.white, fontWeight: FontWeight.w600),
+                //     // ),
+                //   ),
+                //   //
+                //   // ),
+                // ),
               ),
       ),
     );
