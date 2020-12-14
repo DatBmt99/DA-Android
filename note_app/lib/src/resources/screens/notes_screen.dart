@@ -195,7 +195,7 @@ class _NotesScreenState extends State<NotesScreen>
                   ),
                   SizedBox(width: 20.0),
                   Text(
-                    userName,
+                    '$userName',
                     style: TextStyle(
                       fontSize: 28.0,
                       fontWeight: FontWeight.bold,
