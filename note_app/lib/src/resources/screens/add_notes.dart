@@ -7,13 +7,10 @@ class AddEditNote extends StatefulWidget {
   _AddEditNoteState createState() => _AddEditNoteState();
 }
 
-
 class MyTheme {
   Color mainAccentColor = Color(0xff3f79fe);
   Color secondaryColor = Color(0xffeff3f8);
 }
-
-
 
 class _AddEditNoteState extends State<AddEditNote> {
   TextEditingController titleEditingController = TextEditingController();
@@ -78,9 +75,8 @@ class _AddEditNoteState extends State<AddEditNote> {
   Widget build(BuildContext context) {
     titleEditingController.text = note.title;
     textEditingController.text = note.text;
-    return SafeArea(
-      child: Scaffold(
-         appBar: AppBar(
+    return Scaffold(
+      appBar: AppBar(
         title: Text('Add notes'),
         elevation: 0.0,
         backgroundColor: Colors.blue[200],
@@ -91,105 +87,103 @@ class _AddEditNoteState extends State<AddEditNote> {
           },
         ),
       ),
-        backgroundColor: myTheme.secondaryColor,
-        body: Stack(
-          children: <Widget>[
-            ListView(
-              children: <Widget>[
-                // ListTile(
-                //   leading: IconButton(
-                //     icon: Icon(
-                //       Icons.arrow_back,
-                //       color: myTheme.mainAccentColor,
-                //     ),
-                //     onPressed: () {
-                //       Navigator.pop(context);
-                //     },
-                //   ),
-                // ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: TextField(
-                    controller: titleEditingController,
-                    onSubmitted: (value) {
-                      note.title = value;
-                    },
-                    onChanged: (value) {
-                      note.title = value;
-                    },
-                    style: TextStyle(
-                        fontFamily: "BalooTamma2",
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold),
-                    decoration: InputDecoration(
-                        hintText: 'Add Title', border: InputBorder.none),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: TextField(
-                    controller: textEditingController,
-                    onSubmitted: (value) {
-                      note.text = value;
-                    },
-                    onChanged: (value) {
-                      note.text = value;
-                    },
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    style: TextStyle(fontSize: 20, color: Colors.blueGrey),
-                    decoration: InputDecoration(
-                        hintText: 'Add note', border: InputBorder.none),
-                  ),
-                ),
-              ],
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 15, 15, 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    IconButton(
-                      icon: Icon(
-                          note.starred == 0 ? Icons.star_border : Icons.star,
-                          color: myTheme.mainAccentColor),
-                      onPressed: () {
-                        setState(() {
-                          note.starred = note.starred == 0 ? 1 : 0;
-                        });
-                      },
-                    ),
-                    IconButton(
-                      icon:
-                          Icon(Icons.label_outline, color: note.category.color),
-                      onPressed: () {
-                        showCategories(context);
-                      },
-                    ),
-                    Icon(
-                      Icons.share,
-                      color: myTheme.mainAccentColor,
-                    ),
-                    Icon(
-                      Icons.playlist_add_check,
-                      color: myTheme.mainAccentColor,
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.delete, color: myTheme.mainAccentColor),
-                      onPressed: () {
-                        //deleteNote(note.id);
-                        // note.title = '';
-                        // Navigator.pop(context);
-                      },
-                    ),
-                  ],
+      backgroundColor: myTheme.secondaryColor,
+      body: Stack(
+        children: <Widget>[
+          ListView(
+            children: <Widget>[
+              // ListTile(
+              //   leading: IconButton(
+              //     icon: Icon(
+              //       Icons.arrow_back,
+              //       color: myTheme.mainAccentColor,
+              //     ),
+              //     onPressed: () {
+              //       Navigator.pop(context);
+              //     },
+              //   ),
+              // ),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: TextField(
+                  controller: titleEditingController,
+                  onSubmitted: (value) {
+                    note.title = value;
+                  },
+                  onChanged: (value) {
+                    note.title = value;
+                  },
+                  style: TextStyle(
+                      fontFamily: "BalooTamma2",
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                  decoration: InputDecoration(
+                      hintText: 'Add Title', border: InputBorder.none),
                 ),
               ),
-            )
-          ],
-        ),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: TextField(
+                  controller: textEditingController,
+                  onSubmitted: (value) {
+                    note.text = value;
+                  },
+                  onChanged: (value) {
+                    note.text = value;
+                  },
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  style: TextStyle(fontSize: 20, color: Colors.blueGrey),
+                  decoration: InputDecoration(
+                      hintText: 'Add note', border: InputBorder.none),
+                ),
+              ),
+            ],
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(15, 15, 15, 25),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                        note.starred == 0 ? Icons.star_border : Icons.star,
+                        color: myTheme.mainAccentColor),
+                    onPressed: () {
+                      setState(() {
+                        note.starred = note.starred == 0 ? 1 : 0;
+                      });
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.label_outline, color: note.category.color),
+                    onPressed: () {
+                      showCategories(context);
+                    },
+                  ),
+                  Icon(
+                    Icons.share,
+                    color: myTheme.mainAccentColor,
+                  ),
+                  Icon(
+                    Icons.playlist_add_check,
+                    color: myTheme.mainAccentColor,
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete, color: myTheme.mainAccentColor),
+                    onPressed: () {
+                      //deleteNote(note.id);
+                      // note.title = '';
+                      // Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
