@@ -48,11 +48,11 @@ List<Note> starredNotes = [];
 Note note = Note('', '', Category('Not Specified'), Priority('Not Specified'));
 Category newCategory = Category('Not Specified');
 Priority newPriority = Priority('Not Specified');
-String userName;
 MyTheme myTheme = MyTheme();
 
 class _NotesScreenState extends State<NotesScreen>
     with SingleTickerProviderStateMixin {
+  String userName;
   int _selectedCategoryIndex = 0;
   TabController _tabController;
   final DateFormat _dateFormatter = DateFormat('dd MMM');
