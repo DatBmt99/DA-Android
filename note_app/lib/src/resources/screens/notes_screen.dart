@@ -61,16 +61,17 @@ class _NotesScreenState extends State<NotesScreen>
 
   checkLoginStatus() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    var token = sharedPreferences.getString("token");
     if (sharedPreferences.getString("token") == null) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (BuildContext context) => Login()),
           (Route<dynamic> route) => false);
+    } else {
+      var token = sharedPreferences.getString("token");
+      Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+      setState(() {
+        userName = decodedToken['name'];
+      });
     }
-    Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-    setState(() {
-      userName = decodedToken['name'];
-    });
   }
 
   @override
