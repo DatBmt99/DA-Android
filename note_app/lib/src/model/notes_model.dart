@@ -1,3 +1,66 @@
+import 'dart:convert';
+
+List<Notes> notesFromJson(String str) =>
+    List<Notes>.from(json.decode(str).map((x) => Notes.fromJson(x)));
+
+String notesToJson(List<Notes> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class Notes {
+  Notes({
+    this.id,
+    this.uid,
+    this.category,
+    this.title,
+    this.body,
+    this.createdAt,
+    this.updatedAt,
+    this.expiresAt,
+    this.priority,
+    this.status,
+  });
+
+  String id;
+  String uid;
+  String category;
+  String title;
+  String body;
+  DateTime createdAt;
+  DateTime updatedAt;
+  DateTime expiresAt;
+  int priority;
+  int status;
+
+  factory Notes.fromJson(Map<String, dynamic> json) => Notes(
+        id: json["id"],
+        uid: json["uid"],
+        category: json["category"],
+        title: json["title"],
+        body: json["body"],
+        createdAt: DateTime.parse(json['createdAt']), //json["created_at"],
+        updatedAt: json['updatedAt'] == null
+            ? null
+            : DateTime.parse(json[
+                'updatedAt']), //json["updated_at"] == null ? null : json["updated_at"],
+        expiresAt: DateTime.parse(json['expiresAt']),
+        priority: json["priority"],
+        status: json["status"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "uid": uid,
+        "category": category,
+        "title": title,
+        "body": body,
+        "created_at": createdAt,
+        "updated_at": updatedAt == null ? null : updatedAt,
+        "expires_at": expiresAt,
+        "priority": priority,
+        "status": status,
+      };
+}
+
 // class Note {
 //   String title;
 //   String content;
