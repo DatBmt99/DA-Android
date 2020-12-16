@@ -6,7 +6,7 @@ import 'package:note_app/src/model/api_response.dart';
 import 'package:note_app/src/model/notes_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'constans.dart';
+import 'constants.dart';
 
 class PinData {
   static SharedPreferences _prefs;
