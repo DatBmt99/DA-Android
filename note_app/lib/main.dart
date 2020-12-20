@@ -2,16 +2,21 @@ import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:note_app/services/notes_service.dart';
 import 'package:note_app/src/resources/login/login.dart';
 import 'package:note_app/src/resources/login/login_screen.dart';
 import 'package:note_app/src/resources/screens/notes_screen.dart';
 import 'package:note_app/src/resources/screens/onboarding_screen.dart';
+import 'package:note_app/src/resources/screens/showallnotes.dart';
 import 'package:note_app/src/resources/screens/user_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 int initScreen;
-
+void setupLocator() {
+  GetIt.I.registerLazySingleton(() => NotesService());
+}
 //void main() => runApp((MyApp()));
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +24,7 @@ Future<void> main() async {
   initScreen = await prefs.getInt("initScreen");
   await prefs.setInt("initScreen", 1);
   print('initScreen $initScreen');
+  setupLocator();
   runApp(
     EasyLocalization(
       supportedLocales: [Locale('en', 'US'), Locale('vn', 'VN')],
@@ -41,8 +47,8 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      //
-      // home: Login(),
+      
+     // home: ShowNotes(),
       // locale: _locale,
       // supportedLocales: [
       //   Locale('en', 'US'),

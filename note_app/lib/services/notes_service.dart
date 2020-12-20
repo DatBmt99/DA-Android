@@ -8,60 +8,93 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'constants.dart';
 
-class PinData {
-  static SharedPreferences _prefs;
-  static PinData _pinData;
-  static int pinEnable;
-  static String pin;
+// class PinData {
+//   static SharedPreferences _prefs;
+//   static PinData _pinData;
+//   static int pinEnable;
+//   static String pin;
 
-  PinData._createInstance();
+//   PinData._createInstance();
 
-  factory PinData() {
-    if (_pinData == null) {
-      _pinData = PinData._createInstance();
-    }
-    return _pinData;
-  }
-  Future<SharedPreferences> get prefs async {
-    if (_prefs == null) {
-      _prefs = await initialise();
-    }
-    return _prefs;
-  }
+//   factory PinData() {
+//     if (_pinData == null) {
+//       _pinData = PinData._createInstance();
+//     }
+//     return _pinData;
+//   }
+//   Future<SharedPreferences> get prefs async {
+//     if (_prefs == null) {
+//       _prefs = await initialise();
+//     }
+//     return _prefs;
+//   }
 
-  Future<SharedPreferences> initialise() async {
-    return _prefs = await SharedPreferences.getInstance();
-  }
+//   Future<SharedPreferences> initialise() async {
+//     return _prefs = await SharedPreferences.getInstance();
+//   }
 
-  Future<int> getPinEnable() async {
-    pinEnable = (_prefs.getInt('pinEnable') ?? 0);
-    return pinEnable;
-  }
+//   Future<int> getPinEnable() async {
+//     pinEnable = (_prefs.getInt('pinEnable') ?? 0);
+//     return pinEnable;
+//   }
 
-  Future<String> getPin() async {
-    pin = (_prefs.getString('pin') ?? '');
-    return pin;
-  }
+//   Future<String> getPin() async {
+//     pin = (_prefs.getString('pin') ?? '');
+//     return pin;
+//   }
 
-  void setPinEnable(int value) async {
-    _prefs.setInt('pinEnable', value);
-  }
+//   void setPinEnable(int value) async {
+//     _prefs.setInt('pinEnable', value);
+//   }
 
-  void setPin(String value) async {
-    _prefs.setString('pin', value);
-  }
-}
+//   void setPin(String value) async {
+//     _prefs.setString('pin', value);
+//   }
+// }
 
 class NotesService {
+  static SharedPreferences _prefs;
+  // static
+  // Future<SharedPreferences> initialise() async {
+  //   return _prefs = await SharedPreferences.getInstance();
+  // }
+
+  // Future<SharedPreferences> get prefs async {
+  //   if (_prefs == null) {
+  //     _prefs = await initialise();
+  //   }
+  //   return _prefs;
+  // }
+
+  // Future<String> getToken() async {
+  //   token = (_prefs.getString('token') ?? '');
+  //   return token;
+  // }
+
+  // String value = _prefs.getString('token') ?? '';
   static const API = URL_API;
 
   // var token =
-  static const headers = {
-    'Content-Type': 'application/json; charset=UTF-8',
-    // 'Authorization': 'Bearer $value',
-  };
-  Future<APIResponse<List<Notes>>> getNotesList() {
-    return http.get(API + '/notes', headers: headers).then((data) {
+  Future<bool> setToken(String value) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setString('token', value);
+  }
+
+  Future<String> getToken() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
+  }
+
+  Future<APIResponse<List<Notes>>> getNotesList() async {
+    String token = await NotesService().getToken();
+
+    // const headers = {
+    //
+    // };
+    return http.get(API + '/notes', headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer $token',
+    }).then((data) {
       if (data.statusCode == 200) {
         final jsonData = json.decode(data.body);
         final notes = <Notes>[];
@@ -75,7 +108,21 @@ class NotesService {
     }).catchError((_) => APIResponse<List<Notes>>(
         error: true, errorMessage: 'An error occured'));
   }
-
+ Future<APIResponse<Notes>> getNote(String noteID) async {
+   String token = await NotesService().getToken();
+    return http.get(API + '/notes/' + noteID, headers: 
+    {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer $token',
+    }).then((data) {
+      if (data.statusCode == 200) {
+        final jsonData = json.decode(data.body);
+        return APIResponse<Notes>(data: Notes.fromJson(jsonData));
+      }
+      return APIResponse<Notes>(error: true, errorMessage: 'An error occured');
+    })
+    .catchError((_) => APIResponse<Notes>(error: true, errorMessage: 'An error occured'));
+  }
   // Future<int> getCount() async {
 
   //   List<Map<String, dynamic>> x =

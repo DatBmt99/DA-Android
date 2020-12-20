@@ -38,10 +38,9 @@ class Notes {
         title: json["title"],
         body: json["body"],
         createdAt: DateTime.parse(json['createdAt']), //json["created_at"],
-        updatedAt: json['updatedAt'] == null
-            ? null
-            : DateTime.parse(json[
-                'updatedAt']), //json["updated_at"] == null ? null : json["updated_at"],
+        updatedAt: json['updatedAt'] != null
+            ? DateTime.parse(json['updatedAt'])
+            : null, //json["updated_at"] == null ? null : json["updated_at"],
         expiresAt: DateTime.parse(json['expiresAt']),
         priority: json["priority"],
         status: json["status"],
