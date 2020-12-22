@@ -128,7 +128,7 @@ class _NotesScreenState extends State<NotesScreen>
     });
 
     _apiResponse = await notesService.getNotesList();
-
+    var a = _apiResponse;
     setState(() {
       _isLoading = false;
     });

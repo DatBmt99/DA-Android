@@ -91,15 +91,15 @@ class NotesService {
     // const headers = {
     //
     // };
-    return http.get(API + '/notes', headers: {
+    return await http.get(API + '/notes', headers: {
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer $token',
     }).then((data) {
       if (data.statusCode == 200) {
         final jsonData = json.decode(data.body);
         final notes = <Notes>[];
-        for (var item in jsonData) {
-          notes.add(Notes.fromJson(item));
+        for (var json in jsonData) {
+          notes.add(Notes.fromJson(json));
         }
         return APIResponse<List<Notes>>(data: notes);
       }
@@ -108,10 +108,10 @@ class NotesService {
     }).catchError((_) => APIResponse<List<Notes>>(
         error: true, errorMessage: 'An error occured'));
   }
- Future<APIResponse<Notes>> getNote(String noteID) async {
-   String token = await NotesService().getToken();
-    return http.get(API + '/notes/' + noteID, headers: 
-    {
+
+  Future<APIResponse<Notes>> getNote(String noteID) async {
+    String token = await NotesService().getToken();
+    return http.get(API + '/notes/' + noteID, headers: {
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer $token',
     }).then((data) {
@@ -120,9 +120,37 @@ class NotesService {
         return APIResponse<Notes>(data: Notes.fromJson(jsonData));
       }
       return APIResponse<Notes>(error: true, errorMessage: 'An error occured');
-    })
-    .catchError((_) => APIResponse<Notes>(error: true, errorMessage: 'An error occured'));
+    }).catchError((_) =>
+        APIResponse<Notes>(error: true, errorMessage: 'An error occured'));
   }
+  // Future<APIResponse<Notes>> getCategory(String noteID) async {
+  //   String token = await NotesService().getToken();
+  //   return http.get(API + '/notes/' + noteID, headers: {
+  //     'Content-Type': 'application/json; charset=UTF-8',
+  //     'Authorization': 'Bearer $token',
+  //   }).then((data) {
+  //     if (data.statusCode == 200) {
+  //       final jsonData = json.decode(data.body);
+  //       return APIResponse<Notes>(data: Notes.fromJson(jsonData));
+  //     }
+  //     return APIResponse<Notes>(error: true, errorMessage: 'An error occured');
+  //   }).catchError((_) =>
+  //       APIResponse<Notes>(error: true, errorMessage: 'An error occured'));
+  // }
+  // Future<APIResponse<User>> getUserInfo(String userID) async {
+  //   String token = await NotesService().getToken();
+  //   return http.get(API + '/getuserinfo' + userID, headers: {
+  //     'Content-Type': 'application/json; charset=UTF-8',
+  //     'Authorization': 'Bearer $token',
+  //   }).then((data) {
+  //     if (data.statusCode == 200) {
+  //       final jsonData = json.decode(data.body);
+  //       return APIResponse<User>(data: Notes.fromJson(jsonData));
+  //     }
+  //     return APIResponse<Notes>(error: true, errorMessage: 'An error occured');
+  //   }).catchError((_) =>
+  //       APIResponse<Notes>(error: true, errorMessage: 'An error occured'));
+  // }
   // Future<int> getCount() async {
 
   //   List<Map<String, dynamic>> x =
