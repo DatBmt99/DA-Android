@@ -24,7 +24,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   String _email;
   String _password;
-
+  bool isHidden = true;
   bool loading = false;
 
   Future<UserModel> createUser() async {
@@ -79,10 +79,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             SizedBox(height: size.height * 0.03),
-            SvgPicture.asset(
-              "assets/icons/signup1.svg",
-              height: size.height * 0.35,
-            ),
+            // SvgPicture.asset(
+            //   "assets/icons/signup1.svg",
+            //   height: size.height * 0.35,
+            // ),
             RoundedInputField(
               hintText: "Your Email",
               onChanged: (value) {
@@ -90,6 +90,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
               },
             ),
             RoundedPasswordField(
+              hintText: "Enter Password",
+              isHiddenPassword: isHidden,
+              press: () {
+                setState(() {
+                  isHidden = !isHidden;
+                });
+              },
+              onChanged: (value) {
+                _password = value;
+              },
+            ),
+            RoundedPasswordField(
+              hintText: "Retype Password",
+              isHiddenPassword: isHidden,
+              press: () {
+                setState(() {
+                  isHidden = !isHidden;
+                });
+              },
               onChanged: (value) {
                 _password = value;
               },
@@ -102,30 +121,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
             AlreadyHaveAnAccountCheck(
               login: false,
               press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return Login();
-                    },
-                  ),
-                );
+                
+                Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (BuildContext context) => Login()),
+                 (Route<dynamic> route) => false);
               },
             ),
-            OrDivider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SocalIcon(
-                  iconSrc: "assets/icons/facebook.svg",
-                  press: () {},
-                ),
-                SocalIcon(
-                  iconSrc: "assets/icons/google.svg",
-                  press: () {},
-                ),
-              ],
-            )
+            // OrDivider(),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: <Widget>[
+            //     SocalIcon(
+            //       iconSrc: "assets/icons/facebook.svg",
+            //       press: () {},
+            //     ),
+            //     SocalIcon(
+            //       iconSrc: "assets/icons/google.svg",
+            //       press: () {},
+            //     ),
+            //   ],
+            // )
           ],
         ),
       ),

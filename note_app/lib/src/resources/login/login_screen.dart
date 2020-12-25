@@ -5,10 +5,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:note_app/src/components/already_have_an_account_acheck.dart';
 import 'package:note_app/src/components/background_login.dart';
+import 'package:note_app/src/components/or_divider.dart';
 
 import 'package:note_app/src/components/rounded_button.dart';
 import 'package:note_app/src/components/rounded_input_field.dart';
 import 'package:note_app/src/components/rounded_password_field.dart';
+import 'package:note_app/src/components/social_icon.dart';
 import 'package:note_app/src/components/text_forgot_pass.dart';
 import 'package:note_app/src/model/user_model.dart';
 import 'package:note_app/src/resources/login/signup.dart';
@@ -29,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool login = false;
   String _email;
   String _password;
-
+  bool isHidden = true;
   String token;
   bool _isLoading = false;
   _saveToken(String token) async {
@@ -140,10 +142,10 @@ class _LoginScreenState extends State<LoginScreen> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             SizedBox(height: size.height * 0.03),
-            SvgPicture.asset(
-              "assets/icons/login1.svg",
-              height: size.height * 0.35,
-            ),
+            // SvgPicture.asset(
+            //   "assets/icons/login1.svg",
+            //   height: size.height * 0.35,
+            // ),
             SizedBox(height: size.height * 0.03),
             RoundedInputField(
               hintText: "Your Email",
@@ -152,6 +154,12 @@ class _LoginScreenState extends State<LoginScreen> {
               },
             ),
             RoundedPasswordField(
+              isHiddenPassword: isHidden,
+              press: () {
+                setState(() {
+                  isHidden = !isHidden;
+                });
+              },
               onChanged: (value) {
                 _password = value;
               },
@@ -185,6 +193,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 );
               },
+            ),
+            OrDivider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SocalIcon(
+                  iconSrc: "assets/icons/facebook.svg",
+                  press: () {},
+                ),
+                SocalIcon(
+                  iconSrc: "assets/icons/google.svg",
+                  press: () {},
+                ),
+              ],
             )
           ],
         ),

@@ -5,27 +5,37 @@ import 'package:note_app/src/config/constants.dart';
 
 class RoundedPasswordField extends StatelessWidget {
   final ValueChanged<String> onChanged;
+  final Function press;
+   final String hintText;
+  final bool isHiddenPassword;
   const RoundedPasswordField({
     Key key,
     this.onChanged,
+    this.press,
+    this.hintText ="Password",
+    this.isHiddenPassword = true
   }) : super(key: key);
-
+  
   @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
       child: TextField(
-        obscureText: true,
+        obscureText: isHiddenPassword,
         onChanged: onChanged,
         cursorColor: kPrimaryColor,
         decoration: InputDecoration(
-          hintText: "Password",
+          hintText: hintText,
           icon: Icon(
             Icons.lock,
             color: kPrimaryColor,
           ),
-          suffixIcon: Icon(
-            Icons.visibility,
-            color: kPrimaryColor,
+          suffixIcon:  InkWell(
+              onTap: press,
+              child: Icon(
+              isHiddenPassword ?  Icons.visibility_off : Icons.visibility,
+              color: kPrimaryColor,
+             
+            ),
           ),
           border: InputBorder.none,
         ),

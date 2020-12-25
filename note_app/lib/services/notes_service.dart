@@ -98,8 +98,8 @@ class NotesService {
       if (data.statusCode == 200) {
         final jsonData = json.decode(data.body);
         final notes = <Notes>[];
-        for (var json in jsonData) {
-          notes.add(Notes.fromJson(json));
+        for (var i = 0; i < jsonData.length; i ++) {
+          notes.add(Notes.fromJson(jsonData[i]));
         }
         return APIResponse<List<Notes>>(data: notes);
       }

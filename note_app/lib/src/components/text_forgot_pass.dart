@@ -20,6 +20,7 @@ class ForgotPass extends StatelessWidget {
         //   style: TextStyle(color: kPrimaryColor),
         // ),
         GestureDetector(
+          
           onTap: press,
           child: Text(
             formlogin ? "Forgot Password ? " : "Back",

@@ -28,7 +28,7 @@ class Notes {
   DateTime createdAt;
   DateTime updatedAt;
   DateTime expiresAt;
-  int priority;
+  String priority;
   int status;
 
   factory Notes.fromJson(Map<String, dynamic> json) => Notes(
