@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:note_app/services/notes_service.dart';
@@ -195,336 +196,357 @@ class _NotesScreenState extends State<NotesScreen>
     );
   }
 
+  Future<bool> _onBackPressed() {
+    return showDialog(context: context, builder: (context) => AlertDialog(
+      title: Text('Are you sure?'),
+            content: Text('Do you want to exit from App'),
+            actions: <Widget>[
+              new FlatButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text('No'),
+              ),
+              FlatButton(
+                onPressed: () => exit(0),
+                child: new Text('Yes'),
+              ),
+            ],
+          ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: Drawer(
-        child: HomeMenu(),
-      ),
-      key: _scaffoldKey,
-      body: Column(
-        //child: ListView(
-        children: <Widget>[
-          AppBar(
-            backgroundColor: Colors.white10,
-            elevation: 0.0,
-            title: Text(
-              "Notes Manager",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.black),
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: Scaffold(
+        drawer: Drawer(
+          child: HomeMenu(),
+        ),
+        key: _scaffoldKey,
+        body: Column(
+          //child: ListView(
+          children: <Widget>[
+            AppBar(
+              backgroundColor: Colors.white10,
+              elevation: 0.0,
+              title: Text(
+                "Notes Manager",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.black),
+              ),
+              leading: FlatButton(
+                  onPressed: () {
+                    print("click menu");
+                    _scaffoldKey.currentState.openDrawer();
+                  },
+                  child: Icon(Icons.menu)),
             ),
-            leading: FlatButton(
-                onPressed: () {
-                  print("click menu");
-                  _scaffoldKey.currentState.openDrawer();
+            //name
+            // SizedBox(height: 10.0),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 30.0),
+            //   child: Row(
+            //     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: <Widget>[
+            //       GestureDetector(
+            //         onTap: () {
+            //           sharedPreferences.remove("token");
+            //           //   sharedPreferences.commit();
+            //           Navigator.of(context).pushAndRemoveUntil(
+            //               MaterialPageRoute(
+            //                   builder: (BuildContext context) => Login()),
+            //               (Route<dynamic> route) => false);
+            //         },
+            //         child: Container(
+            //           height: 50.0,
+            //           width: 50.0,
+            //           decoration: BoxDecoration(
+            //             image: DecorationImage(
+            //               image: AssetImage('assets/images/male_avatar.png'),
+            //             ),
+            //             borderRadius: BorderRadius.circular(10.0),
+            //           ),
+            //         ),
+            //       ),
+            //       SizedBox(width: 20.0),
+            //       Text(
+            //         '$userName',
+            //         style: TextStyle(
+            //           fontSize: 28.0,
+            //           fontWeight: FontWeight.bold,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // //  SearchInputField    ),
+            // SizedBox(height: 5.0),
+            //catergory
+            Container(
+              height: 280.0,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: categories.length + 1,
+                itemBuilder: (BuildContext context, int index) {
+                  if (index == 0) {
+                    return SizedBox(width: 20.0);
+                  }
+                  return _buildCategoryCard(
+                    index - 1,
+                    categories.keys.toList()[index - 1],
+                    categories.values.toList()[index - 1],
+                  );
                 },
-                child: Icon(Icons.menu)),
-          ),
-          //name
-          // SizedBox(height: 10.0),
-          // Padding(
-          //   padding: EdgeInsets.symmetric(horizontal: 30.0),
-          //   child: Row(
-          //     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: <Widget>[
-          //       GestureDetector(
-          //         onTap: () {
-          //           sharedPreferences.remove("token");
-          //           //   sharedPreferences.commit();
-          //           Navigator.of(context).pushAndRemoveUntil(
-          //               MaterialPageRoute(
-          //                   builder: (BuildContext context) => Login()),
-          //               (Route<dynamic> route) => false);
-          //         },
-          //         child: Container(
-          //           height: 50.0,
-          //           width: 50.0,
-          //           decoration: BoxDecoration(
-          //             image: DecorationImage(
-          //               image: AssetImage('assets/images/male_avatar.png'),
-          //             ),
-          //             borderRadius: BorderRadius.circular(10.0),
-          //           ),
-          //         ),
-          //       ),
-          //       SizedBox(width: 20.0),
-          //       Text(
-          //         '$userName',
-          //         style: TextStyle(
-          //           fontSize: 28.0,
-          //           fontWeight: FontWeight.bold,
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          // //  SearchInputField    ),
-          // SizedBox(height: 5.0),
-          //catergory
-          Container(
-            height: 280.0,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: categories.length + 1,
-              itemBuilder: (BuildContext context, int index) {
-                if (index == 0) {
-                  return SizedBox(width: 20.0);
-                }
-                return _buildCategoryCard(
-                  index - 1,
-                  categories.keys.toList()[index - 1],
-                  categories.values.toList()[index - 1],
-                );
-              },
+              ),
             ),
-          ),
-          TabBar(
-            labelStyle: TextStyle(fontSize: 17),
-            labelColor: Colors.black,
-            indicatorColor: myTheme.mainAccentColor,
-            indicatorSize: TabBarIndicatorSize.label,
-            indicatorWeight: 2,
-            unselectedLabelStyle: TextStyle(fontSize: 17),
-            unselectedLabelColor: Colors.blueGrey,
-            tabs: myTabs,
-            controller: _tabController,
-          ),
-          Flexible(
-            child: TabBarView(
-              physics: BouncingScrollPhysics(),
+            TabBar(
+              labelStyle: TextStyle(fontSize: 17),
+              labelColor: Colors.black,
+              indicatorColor: myTheme.mainAccentColor,
+              indicatorSize: TabBarIndicatorSize.label,
+              indicatorWeight: 2,
+              unselectedLabelStyle: TextStyle(fontSize: 17),
+              unselectedLabelColor: Colors.blueGrey,
+              tabs: myTabs,
               controller: _tabController,
-              children: <Widget>[
-                Tab(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListView.builder(
-                      physics: BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: myTheme.secondaryColor,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: ListTile(
-                              onLongPress: () {
-                                showDialog(
-                                  barrierDismissible: true,
-                                  context: context,
-                                  builder: (_) => AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    title: Text('Delete Note?'),
-                                    actions: <Widget>[
-                                      FlatButton(
-                                          onPressed: () {
-                                            // databaseHelper
-                                            //     .deleteNote(notes[index].id);
-                                            // updateList();
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text('Yes')),
-                                      FlatButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text('No'))
-                                    ],
-                                  ),
-                                );
-                              },
-                              onTap: () {
-                                // note = notes[index];
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AddEditNote()),
-                                ).then((onValue) {
-                                  print(onValue);
-                                  if (_apiResponse.data[index].title != '' &&
-                                      _apiResponse.data[index].body != '') {
-                                    //      .updateNote(note);
-                                  }
-                                  //     updateList();
-                                });
-                              },
-                              title: Text(
-                                _apiResponse.data[index].title,
-                                style: TextStyle(
+            ),
+            Flexible(
+              child: TabBarView(
+                physics: BouncingScrollPhysics(),
+                controller: _tabController,
+                children: <Widget>[
+                  Tab(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListView.builder(
+                        physics: BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: myTheme.secondaryColor,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: ListTile(
+                                onLongPress: () {
+                                  showDialog(
+                                    barrierDismissible: true,
+                                    context: context,
+                                    builder: (_) => AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      title: Text('Delete Note?'),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                            onPressed: () {
+                                              // databaseHelper
+                                              //     .deleteNote(notes[index].id);
+                                              // updateList();
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text('Yes')),
+                                        FlatButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text('No'))
+                                      ],
+                                    ),
+                                  );
+                                },
+                                onTap: () {
+                                  // note = notes[index];
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AddEditNote()),
+                                  ).then((onValue) {
+                                    print(onValue);
+                                    if (_apiResponse.data[index].title != '' &&
+                                        _apiResponse.data[index].body != '') {
+                                      //      .updateNote(note);
+                                    }
+                                    //     updateList();
+                                  });
+                                },
+                                title: Text(
+                                  _apiResponse.data[index].title,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: Text(
+                                  _apiResponse.data[index].body,
+                                  maxLines: 3,
+                                  style: TextStyle(
                                     color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              subtitle: Text(
-                                _apiResponse.data[index].body,
-                                maxLines: 3,
-                                style: TextStyle(
-                                  color: Colors.black,
+                                  ),
+                                ),
+                                trailing: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text(
+                                      '${notes[index].dateTime.hour > 12 ? notes[index].dateTime.hour - 12 : notes[index].dateTime.hour}:${notes[index].dateTime.minute} ${notes[index].dateTime.hour > 12 ? 'PM' : 'AM'}',
+                                      style: TextStyle(
+                                          color: Colors.blueGrey,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Icon(
+                                      Icons.label_outline,
+                                      //color: notes[index].category.color,
+                                    )
+                                  ],
                                 ),
                               ),
-                              trailing: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Text(
-                                    '${notes[index].dateTime.hour > 12 ? notes[index].dateTime.hour - 12 : notes[index].dateTime.hour}:${notes[index].dateTime.minute} ${notes[index].dateTime.hour > 12 ? 'PM' : 'AM'}',
-                                    style: TextStyle(
-                                        color: Colors.blueGrey,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Icon(
-                                    Icons.label_outline,
-                                    //color: notes[index].category.color,
-                                  )
-                                ],
-                              ),
                             ),
-                          ),
-                        );
-                      },
-                      itemCount: notes.length,
+                          );
+                        },
+                        itemCount: notes.length,
+                      ),
                     ),
                   ),
-                ),
-                Tab(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        return Center(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-                            child: Card(
-                              color: myTheme.secondaryColor,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Center(
-                                child: ListTile(
-                                  onTap: null,
-                                  title: Text(
-                                    mainTileNameList[index],
-                                    style: TextStyle(
+                  Tab(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListView.builder(
+                        itemBuilder: (context, index) {
+                          return Center(
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                              child: Card(
+                                color: myTheme.secondaryColor,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Center(
+                                  child: ListTile(
+                                    onTap: null,
+                                    title: Text(
+                                      mainTileNameList[index],
+                                      style: TextStyle(
+                                          color: Colors.blueGrey,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    subtitle: Text(
+                                      'Test body',
+                                      style: TextStyle(
                                         color: Colors.blueGrey,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  subtitle: Text(
-                                    'Test body',
-                                    style: TextStyle(
-                                      color: Colors.blueGrey,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                      itemCount: mainTileNameList.length,
+                          );
+                        },
+                        itemCount: mainTileNameList.length,
+                      ),
                     ),
                   ),
-                ),
-                Tab(
-                  child: ListTile(
-                    title: Text('Test body'),
+                  Tab(
+                    child: ListTile(
+                      title: Text('Test body'),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-      //),
-      floatingActionButton: SpeedDial(
-        animatedIcon: AnimatedIcons.add_event,
-        // backgroundColor: Colors.redAccent,
-        children: [
-          SpeedDialChild(
-            child: Icon(Icons.event),
-            label: "Add Note",
-            backgroundColor: Colors.orange,
-            onTap: () {
-              // note = Note(
-              //     '', '', Category('Not Specified'), Priority('Not Specified'));
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AddEditNote()),
-              ).then((onValue) {
-                if (note.title != '' && note.body != '') {
-                  //  databaseHelper.insertNote(note);
-                }
-                //   updateList();
-              });
-            },
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.create_new_folder),
-            label: "Add Category",
-            backgroundColor: Colors.green,
-            onTap: () {
-              newCategory = Category('Not Specified');
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AddEditCategory()),
-              ).then((onValue) {
-                if (newCategory.name != 'Not Specified') {
-                  categoryList.add(newCategory);
-                  categoryNameList.add(newCategory.name);
-                  // updateList();
-                  // updateCategoryList();
-                }
-              });
-            },
-          ),
-        ],
-      ),
-      // floatingActionButton: Padding(
-      //   padding: const EdgeInsets.fromLTRB(15, 8.0, 15, 8.0),
-      //   child: Row(
-      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //     children: <Widget>[
-      //       FloatingActionButton.extended(
-      //         backgroundColor: myTheme.mainAccentColor,
-      //         heroTag: 'AddEditCategory',
-      //         label: Text('Category'),
-      //         icon: Icon(Icons.add),
-      //         onPressed: () {
-      //           newCategory = Category('Not Specified');
-      //           Navigator.push(
-      //             context,
-      //             MaterialPageRoute(builder: (context) => AddEditCategory()),
-      //           ).then((onValue) {
-      //             if (newCategory.name != 'Not Specified') {
-      //               categoryList.add(newCategory);
-      //               categoryNameList.add(newCategory.name);
+          ],
+        ),
+        //),
+        floatingActionButton: SpeedDial(
+          animatedIcon: AnimatedIcons.add_event,
+          // backgroundColor: Colors.redAccent,
+          children: [
+            SpeedDialChild(
+              child: Icon(Icons.event),
+              label: "Add Note",
+              backgroundColor: Colors.orange,
+              onTap: () {
+                // note = Note(
+                //     '', '', Category('Not Specified'), Priority('Not Specified'));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddEditNote()),
+                ).then((onValue) {
+                  if (note.title != '' && note.body != '') {
+                    //  databaseHelper.insertNote(note);
+                  }
+                  //   updateList();
+                });
+              },
+            ),
+            SpeedDialChild(
+              child: Icon(Icons.create_new_folder),
+              label: "Add Category",
+              backgroundColor: Colors.green,
+              onTap: () {
+                newCategory = Category('Not Specified');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddEditCategory()),
+                ).then((onValue) {
+                  if (newCategory.name != 'Not Specified') {
+                    categoryList.add(newCategory);
+                    categoryNameList.add(newCategory.name);
+                    // updateList();
+                    // updateCategoryList();
+                  }
+                });
+              },
+            ),
+          ],
+        ),
+        // floatingActionButton: Padding(
+        //   padding: const EdgeInsets.fromLTRB(15, 8.0, 15, 8.0),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     children: <Widget>[
+        //       FloatingActionButton.extended(
+        //         backgroundColor: myTheme.mainAccentColor,
+        //         heroTag: 'AddEditCategory',
+        //         label: Text('Category'),
+        //         icon: Icon(Icons.add),
+        //         onPressed: () {
+        //           newCategory = Category('Not Specified');
+        //           Navigator.push(
+        //             context,
+        //             MaterialPageRoute(builder: (context) => AddEditCategory()),
+        //           ).then((onValue) {
+        //             if (newCategory.name != 'Not Specified') {
+        //               categoryList.add(newCategory);
+        //               categoryNameList.add(newCategory.name);
 
-      //               // updateList();
-      //               // updateCategoryList();
-      //             }
-      //           });
-      //         },
-      //       ),
-      //       FloatingActionButton.extended(
-      //         heroTag: 'AddEditNote',
-      //         backgroundColor: myTheme.mainAccentColor,
-      //         label: Text('Note'),
-      //         icon: Icon(Icons.add),
-      //         onPressed: () {
-      //           note = Note('', '', Category('Not Specified'),
-      //               Priority('Not Specified'));
-      //           Navigator.push(
-      //             context,
-      //             MaterialPageRoute(builder: (context) => AddEditNote()),
-      //           ).then((onValue) {
-      //             if (note.title != '' && note.text != '') {
-      //               //  databaseHelper.insertNote(note);
-      //             }
-      //             //   updateList();
-      //           });
-      //         },
-      //       )
-      //     ],
-      //   ),
-      // ),
+        //               // updateList();
+        //               // updateCategoryList();
+        //             }
+        //           });
+        //         },
+        //       ),
+        //       FloatingActionButton.extended(
+        //         heroTag: 'AddEditNote',
+        //         backgroundColor: myTheme.mainAccentColor,
+        //         label: Text('Note'),
+        //         icon: Icon(Icons.add),
+        //         onPressed: () {
+        //           note = Note('', '', Category('Not Specified'),
+        //               Priority('Not Specified'));
+        //           Navigator.push(
+        //             context,
+        //             MaterialPageRoute(builder: (context) => AddEditNote()),
+        //           ).then((onValue) {
+        //             if (note.title != '' && note.text != '') {
+        //               //  databaseHelper.insertNote(note);
+        //             }
+        //             //   updateList();
+        //           });
+        //         },
+        //       )
+        //     ],
+        //   ),
+        // ),
+      ),
     );
   }
 }

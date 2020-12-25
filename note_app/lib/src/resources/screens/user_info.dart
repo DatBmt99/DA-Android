@@ -56,38 +56,41 @@ class _UserProfilePage extends State<UserProfile> {
       body: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                height: 450,
-                width: double.infinity,
-                margin: EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    textField(hintText: 'Your Name'),
-                    textField(hintText: 'Email'),
-                    Container(
-                      height: 55,
-                      width: double.infinity,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(29),
-                        child: FlatButton(
-                          // padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-                          color: Colors.blue,
-                          onPressed: () {},
-                          child: Text(
-                            "CẬP NHẬT",
-                            style: TextStyle(fontSize: 20, color: Colors.white),
+          SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  height: 450,
+                  width: double.infinity,
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      textField(hintText: 'Your Name'),
+                      textField(hintText: 'Email'),
+                      Container(
+                        height: 55,
+                        width: double.infinity,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(29),
+                          child: FlatButton(
+                            // padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+                            color: Colors.blue,
+                            onPressed: () {},
+                            child: Text(
+                              "CẬP NHẬT",
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.white),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              )
-            ],
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
           CustomPaint(
             child: Container(

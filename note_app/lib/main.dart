@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:note_app/services/notes_service.dart';
+import 'package:note_app/services/push_notification.dart';
 import 'package:note_app/src/resources/login/login.dart';
 import 'package:note_app/src/resources/login/login_screen.dart';
 import 'package:note_app/src/resources/screens/notes_screen.dart';
@@ -13,10 +14,14 @@ import 'package:note_app/src/resources/screens/user_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+GetIt locator = GetIt.instance();
 int initScreen;
 void setupLocator() {
-  GetIt.I.registerLazySingleton(() => NotesService());
+  // GetIt.I.registerLazySingleton(() => NotesService());
+  locator.registerLazySingleton(() => NotesService());
+  locator.registerLazySingleton(() => PushNotificationService());
 }
+
 //void main() => runApp((MyApp()));
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,8 +52,8 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      
-     // home: ShowNotes(),
+
+      // home: ShowNotes(),
       // locale: _locale,
       // supportedLocales: [
       //   Locale('en', 'US'),
